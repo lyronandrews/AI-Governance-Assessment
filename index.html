@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PROFABULA — Enterprise AI Governance Maturity Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#10211F;
+  --ink2:#43534F;
+  --ink3:#6B7A76;
+  --paper:#E9ECE8;
+  --card:#FFFFFF;
+  --line:#C9D1CB;
+  --line2:#E2E7E2;
+  --accent:#0E5A54;
+  --accent-soft:#E2EDEA;
+  --signal:#A9651A;
+  --l1:#9A3B2C;
+  --l2:#B4741A;
+  --l3:#84803A;
+  --l4:#4A7A5C;
+  --l5:#0E5A54;
+  --radius:3px;
+  --sans:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 80px}
+
+/* ---------- masthead ---------- */
+.masthead{
+  border-bottom:1px solid var(--line);
+  background:var(--paper);
+  position:sticky;top:0;z-index:20;
+}
+.masthead-in{
+  max-width:900px;margin:0 auto;padding:14px 20px 8px;
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+}
+.mark{
+  font-weight:700;font-size:15px;letter-spacing:-0.01em;
+  display:flex;align-items:center;gap:9px;
+}
+.mark .dotrow{display:flex;gap:2px}
+.mark .dotrow i{width:5px;height:14px;background:var(--line);display:block}
+.mark .dotrow i:nth-child(1){background:var(--l1)}
+.mark .dotrow i:nth-child(2){background:var(--l2)}
+.mark .dotrow i:nth-child(3){background:var(--l3)}
+.mark .dotrow i:nth-child(4){background:var(--l4)}
+.mark .dotrow i:nth-child(5){background:var(--l5)}
+.mark .brand{font-weight:700;letter-spacing:.09em;color:var(--accent);margin-right:2px}
+.tabs{display:flex;gap:2px;margin-left:auto}
+.tab{
+  font-family:var(--sans);font-size:13.5px;font-weight:500;
+  background:none;border:1px solid transparent;border-bottom:none;
+  padding:7px 13px;color:var(--ink3);cursor:pointer;border-radius:3px 3px 0 0;
+}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--card);border-color:var(--line);color:var(--ink);font-weight:600}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---------- opening ---------- */
+.opening{padding:64px 0 8px;max-width:680px}
+.kicker{font-size:14px;color:var(--ink3);margin:0 0 22px;font-weight:500}
+h1{
+  font-family:var(--sans);font-weight:700;
+  font-size:clamp(34px,6vw,54px);line-height:1.04;letter-spacing:-0.035em;
+  margin:0 0 26px;
+}
+.standfirst{font-family:var(--serif);font-size:20px;line-height:1.55;color:var(--ink2);margin:0 0 20px;max-width:60ch}
+.standfirst strong{color:var(--ink);font-weight:500}
+.credit{
+  max-width:900px;margin:0 auto;padding:0 20px 9px;
+  display:flex;justify-content:flex-end;
+}
+.credit p{
+  margin:0;font-size:12px;color:var(--ink3);text-align:right;line-height:1.35;
+}
+.credit b{display:block;font-size:12.5px;font-weight:600;color:var(--ink2)}
+@media (max-width:640px){
+  .masthead{position:static}
+  .radar .lbl{font-size:17px}
+  .radar .sc{font-size:14px}
+  .radar .rl{font-size:13px}
+  .radar .meanlbl{font-size:14px}
+  .vizbar{gap:8px}
+  .spread{font-size:12px}
+  .credit{justify-content:flex-start;padding:0 16px 9px}
+  .credit p{text-align:left;font-size:11.5px}
+  .credit b{display:inline;font-size:11.5px}
+  .credit b:after{content:" \00b7 ";color:var(--line)}
+}
+.meta-row{
+  display:flex;gap:26px;flex-wrap:wrap;margin:34px 0 30px;padding:18px 0;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.meta-item{font-size:14px;color:var(--ink2)}
+.meta-item b{display:block;font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;line-height:1.2}
+.dimlist{list-style:none;padding:0;margin:0 0 34px;border-top:1px solid var(--line2)}
+.dimlist li{
+  display:flex;gap:14px;align-items:baseline;
+  padding:10px 0;border-bottom:1px solid var(--line2);font-size:15px;
+}
+.dimlist .n{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums;min-width:18px;font-weight:600}
+.dimlist .fw{margin-left:auto;font-size:12px;color:var(--ink3);text-align:right}
+
+/* ---------- buttons ---------- */
+button{font-family:var(--sans)}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--accent);color:#fff;border:1px solid var(--accent);
+  font-size:15px;font-weight:600;padding:12px 22px;border-radius:var(--radius);
+  cursor:pointer;transition:background .12s ease;
+}
+.btn:hover{background:#0B4641}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{background:var(--card);border-color:var(--ink3)}
+.btn.small{font-size:13.5px;padding:9px 15px}
+.btn[disabled]{opacity:.35;cursor:not-allowed}
+.note{font-size:13px;color:var(--ink3);margin-top:14px;max-width:56ch}
+
+/* ---------- progress ladder ---------- */
+.ladder{display:flex;gap:4px;margin:28px 0 0}
+.rung{
+  flex:1;height:5px;background:var(--line);border:none;padding:0;cursor:pointer;
+  border-radius:1px;position:relative;
+}
+.rung[data-state="done"]{background:var(--accent)}
+.rung[data-state="current"]{background:var(--signal)}
+.rung:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.counter{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink3);margin-top:9px;font-variant-numeric:tabular-nums}
+
+/* ---------- question ---------- */
+.qcard{padding:34px 0 0}
+.dimname{font-size:13px;font-weight:600;color:var(--signal);margin:0 0 10px;letter-spacing:.01em}
+.qtext{
+  font-family:var(--sans);font-weight:600;font-size:clamp(23px,3.6vw,31px);
+  line-height:1.2;letter-spacing:-0.025em;margin:0 0 12px;max-width:24ch;
+}
+.tagline{font-size:12.5px;color:var(--ink3);margin:0 0 24px;line-height:1.6}
+.tagline span{white-space:nowrap}
+.tagline span + span:before{content:"  /  ";color:var(--line)}
+
+fieldset{border:none;margin:0;padding:0}
+legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.opt{display:block;position:relative;margin-bottom:7px;cursor:pointer}
+.opt input{position:absolute;opacity:0;width:0;height:0}
+.optbody{
+  display:grid;grid-template-columns:44px 1fr;gap:0;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  transition:border-color .12s ease;
+}
+.opt:hover .optbody{border-color:var(--ink3)}
+.opt input:focus-visible + .optbody{outline:2px solid var(--accent);outline-offset:2px}
+.opt input:checked + .optbody{border-color:var(--ink);border-width:1px;box-shadow:inset 0 0 0 1px var(--ink)}
+.lvl{
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  padding:13px 0;border-right:1px solid var(--line2);
+}
+.lvl .num{
+  font-size:15px;font-weight:700;width:25px;height:25px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;background:var(--lc,var(--line));font-variant-numeric:tabular-nums;
+}
+.opt input:not(:checked) + .optbody .lvl .num{background:#fff;color:var(--lc);box-shadow:inset 0 0 0 1.5px var(--lc)}
+.optmain{padding:12px 16px 13px;display:block}
+.optlabel{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.optdesc{display:block;font-family:var(--serif);font-size:16.5px;line-height:1.5;color:var(--ink2);max-width:66ch}
+
+.qextras{margin-top:18px;padding-top:16px;border-top:1px solid var(--line2);display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+
+/* measurement signals */
+.signals{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+.signals h5{font-size:14px;font-weight:600;margin:0 0 3px}
+.signals .sub{font-size:13px;color:var(--ink3);margin:0 0 13px;max-width:60ch}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px 22px}
+.sitem{display:flex;gap:9px;align-items:flex-start;font-size:14.5px;line-height:1.4;color:var(--ink2);cursor:pointer;padding:5px 0}
+.sitem input{margin-top:2px;accent-color:var(--accent);width:15px;height:15px;flex:none}
+.sitem:hover{color:var(--ink)}
+.scount{font-size:13px;color:var(--ink3);margin-top:11px;padding-top:10px;border-top:1px solid var(--line2);font-variant-numeric:tabular-nums}
+.scount b{color:var(--ink);font-weight:600}
+.meter{display:flex;gap:3px;margin:0 0 14px}
+.meter i{flex:1;height:8px;background:#EDEFEC;border-radius:2px;display:block}
+.meter i.on{background:var(--accent)}
+.missing{list-style:none;padding:0;margin:10px 0 0}
+.missing li{font-family:var(--serif);font-size:16px;line-height:1.45;color:var(--ink2);padding:5px 0 5px 18px;position:relative}
+.missing li:before{content:"";position:absolute;left:0;top:13px;width:8px;height:1px;background:var(--signal)}
+.guess{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:var(--ink2);cursor:pointer;max-width:34ch}
+.guess input{margin-top:3px;accent-color:var(--signal);width:16px;height:16px}
+.evidence{flex:1;min-width:250px}
+.evidence label{display:block;font-size:12.5px;color:var(--ink3);margin-bottom:5px}
+.evidence input{
+  width:100%;font-family:var(--serif);font-size:15px;padding:8px 10px;
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--card);color:var(--ink);
+}
+.evidence input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:var(--accent)}
+.nav{display:flex;gap:10px;align-items:center;margin-top:28px}
+.nav .spacer{flex:1}
+.kbd{font-size:12px;color:var(--ink3)}
+.kbd b{font-family:var(--sans);font-weight:600;border:1px solid var(--line);border-bottom-width:2px;border-radius:3px;padding:1px 5px;color:var(--ink2)}
+
+/* ---------- results ---------- */
+.res-head{padding:40px 0 0}
+.band{
+  border:1px solid var(--ink);background:var(--card);border-radius:var(--radius);
+  padding:26px 28px;margin:0 0 26px;
+}
+.band-top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.band-name{font-size:clamp(28px,5vw,40px);font-weight:700;letter-spacing:-0.03em;line-height:1}
+.band-score{font-size:14px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.band-score b{font-size:20px;color:var(--ink);font-weight:600}
+.band p{font-family:var(--serif);font-size:17.5px;line-height:1.6;color:var(--ink2);margin:0 0 12px;max-width:68ch}
+.band .move{
+  font-family:var(--sans);font-size:15px;line-height:1.55;color:var(--ink);
+  border-left:3px solid var(--signal);padding-left:14px;margin-top:18px;max-width:64ch;
+}
+.band .move b{font-weight:600}
+
+h2{font-size:15px;font-weight:600;letter-spacing:-0.01em;margin:38px 0 4px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.h2sub{font-size:13.5px;color:var(--ink3);margin:8px 0 18px;max-width:64ch}
+
+/* visualization */
+.viz{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px 18px}
+.vizbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.segs{display:inline-flex;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.seg{background:var(--card);border:none;padding:6px 15px;font-size:13px;font-weight:500;color:var(--ink3);cursor:pointer}
+.seg + .seg{border-left:1px solid var(--line)}
+.seg[aria-pressed="true"]{background:var(--ink);color:#fff}
+.seg:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.spread{margin-left:auto;font-size:12.5px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.spread b{color:var(--ink);font-weight:600}
+.vizhelp{font-size:12.5px;color:var(--ink3);text-align:center;margin:12px 0 0;line-height:1.5}
+
+.radar{width:100%;height:auto;display:block;max-width:640px;margin:0 auto}
+.radar .ring{fill:none;stroke:var(--line2);stroke-width:1}
+.radar .ring.outer{stroke:var(--line)}
+.radar .spoke{stroke:var(--line2);stroke-width:1}
+.radar .polyfill{fill:var(--accent);fill-opacity:.13;stroke:none}
+.radar .edge{stroke:var(--accent);stroke-width:2;stroke-linecap:round}
+.radar .edge.unsure{stroke-dasharray:5 4;stroke-opacity:.8}
+.radar .vtx.unsure{stroke-width:2.5}
+.radar .sc.unsure{fill:var(--signal)}
+.radar .meanring{fill:none;stroke:var(--signal);stroke-width:1.5;stroke-dasharray:5 4}
+.radar .vtx{stroke:#fff;stroke-width:2}
+.radar .lbl{font-family:var(--sans);font-size:12px;fill:var(--ink2);font-weight:600}
+.radar .lbl.low{fill:var(--l1)}
+.radar .lbl.unrated{fill:var(--ink3);font-weight:400}
+.radar .sc{font-family:var(--sans);font-size:11px;fill:var(--ink3);font-weight:500}
+.radar .rl{font-family:var(--sans);font-size:9.5px;fill:var(--ink3)}
+.radar .meanlbl{font-family:var(--sans);font-size:10px;fill:var(--signal);font-weight:600}
+
+/* heat map */
+.grid{border-top:1px solid var(--line2)}
+.grow{display:grid;grid-template-columns:1fr 210px 30px;align-items:center;border-bottom:1px solid var(--line2);gap:14px;padding:8px 2px}
+.grow:last-child{border-bottom:none}
+.grow.head{font-size:11px;color:var(--ink3);padding-top:6px;padding-bottom:6px;letter-spacing:.02em}
+.gname{font-size:14px;font-weight:500}
+.gname em{font-style:normal;color:var(--signal);font-size:12px;margin-left:6px;font-weight:600}
+.gcells{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
+.gcell{height:24px;background:#F1F3F0;border-radius:2px}
+.ghead{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;text-align:center;font-variant-numeric:tabular-nums}
+.gscore{font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2)}
+
+/* gaps */
+.gap{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gc);border-radius:var(--radius);padding:17px 20px;margin-bottom:9px}
+.gap-top{display:flex;align-items:baseline;gap:12px;margin-bottom:7px;flex-wrap:wrap}
+.gap-name{font-size:17px;font-weight:600;letter-spacing:-0.015em}
+.gap-score{font-size:12.5px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.gap p{font-family:var(--serif);font-size:16.5px;line-height:1.5;color:var(--ink2);margin:0 0 8px;max-width:68ch}
+.gap .yours{font-size:13.5px;color:var(--ink3);border-top:1px solid var(--line2);padding-top:8px;margin-top:10px}
+.gap .yours b{color:var(--ink2);font-weight:500}
+
+/* flags */
+.flag{display:flex;gap:13px;padding:14px 0;border-bottom:1px solid var(--line2);align-items:flex-start}
+.flag:last-child{border-bottom:none}
+.flag .mk{width:9px;height:9px;border-radius:50%;background:var(--signal);flex:none;margin-top:7px}
+.flag .ft{font-size:14.5px;font-weight:600;margin-bottom:2px}
+.flag p{font-family:var(--serif);font-size:16px;line-height:1.5;color:var(--ink2);margin:0;max-width:68ch}
+
+/* takeaway */
+.field{margin-bottom:18px}
+.field label{display:block;font-size:14px;font-weight:600;margin-bottom:3px}
+.field .hint{font-size:13px;color:var(--ink3);margin-bottom:7px;max-width:62ch}
+.field textarea,.field select,.field input[type=text]{
+  width:100%;font-family:var(--serif);font-size:16px;line-height:1.5;
+  padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--card);color:var(--ink);resize:vertical;
+}
+.field select{font-family:var(--sans);font-size:15px}
+.field textarea:focus,.field select:focus,.field input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:var(--accent)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:24px;padding-top:22px;border-top:1px solid var(--line)}
+.toast{font-size:13.5px;color:var(--accent);font-weight:600;opacity:0;transition:opacity .2s}
+.toast.on{opacity:1}
+
+/* ---------- reference tabs ---------- */
+.ref{padding:40px 0 0;max-width:720px}
+.ref h3{font-size:clamp(24px,4vw,32px);font-weight:700;letter-spacing:-0.03em;margin:0 0 10px;line-height:1.1}
+.ref .lede{font-family:var(--serif);font-size:18px;line-height:1.55;color:var(--ink2);margin:0 0 30px;max-width:62ch}
+.term{padding:14px 0;border-bottom:1px solid var(--line2)}
+.term:first-of-type{border-top:1px solid var(--line)}
+.term dt{font-size:15.5px;font-weight:600;margin-bottom:3px}
+.term dd{margin:0;font-family:var(--serif);font-size:16.5px;line-height:1.5;color:var(--ink2);max-width:66ch}
+.term dd .src{display:block;font-family:var(--sans);font-size:12px;color:var(--ink3);margin-top:4px}
+dl{margin:0 0 34px}
+
+.run{display:grid;grid-template-columns:78px 1fr;gap:0 18px;border-top:1px solid var(--line)}
+.run .t{font-size:13px;color:var(--signal);font-weight:600;padding:13px 0;font-variant-numeric:tabular-nums;border-bottom:1px solid var(--line2)}
+.run .d{padding:13px 0;border-bottom:1px solid var(--line2)}
+.run .d b{display:block;font-size:15px;font-weight:600;margin-bottom:3px}
+.run .d p{margin:0;font-family:var(--serif);font-size:16px;line-height:1.5;color:var(--ink2);max-width:60ch}
+.prompts{list-style:none;padding:0;margin:0 0 34px;counter-reset:p}
+.prompts li{
+  counter-increment:p;font-family:var(--serif);font-size:17px;line-height:1.5;
+  padding:11px 0 11px 34px;position:relative;border-bottom:1px solid var(--line2);color:var(--ink2);max-width:64ch;
+}
+.prompts li:before{
+  content:counter(p);position:absolute;left:0;top:13px;
+  font-family:var(--sans);font-size:11.5px;font-weight:700;color:var(--signal);
+}
+.callout{background:var(--accent-soft);border-radius:var(--radius);padding:18px 20px;margin:0 0 30px}
+.callout b{display:block;font-size:14.5px;margin-bottom:5px}
+.callout p{margin:0;font-family:var(--serif);font-size:16.5px;line-height:1.55;color:var(--ink2);max-width:62ch}
+.ref p.body{font-family:var(--serif);font-size:17px;line-height:1.55;color:var(--ink2);max-width:64ch}
+.ref h4{font-size:15px;font-weight:600;margin:32px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+
+.printhead,.printfoot,.printcommit{display:none}
+.printcommit .pc{margin:0 0 11px}
+.printcommit .pc b{display:block;font-size:9pt;color:#555;font-weight:600;margin-bottom:2px}
+.printcommit .pc span{display:block;font-family:var(--serif);font-size:11pt;line-height:1.45;color:#000}
+.printhead .ph-title{font-size:15pt;font-weight:700;letter-spacing:-0.02em}
+.printhead .ph-title span{color:var(--accent);letter-spacing:.09em}
+.printhead .ph-cred{font-size:10pt;font-weight:600;color:var(--ink2);margin-top:3px}
+.printhead .ph-meta{font-size:9pt;color:var(--ink3);margin-top:2px}
+
+.hidden{display:none !important}
+
+@media (max-width:640px){
+  .masthead-in{padding:11px 16px}
+  .tabs{width:100%;margin-left:0;overflow-x:auto}
+  .wrap{padding:0 16px 60px}
+  .opening{padding:40px 0 8px}
+  .optbody{grid-template-columns:36px 1fr}
+  .optmain{padding:11px 13px 12px}
+  .optdesc{font-size:16px}
+  .grow{grid-template-columns:1fr 26px;gap:4px 10px}
+  .gcells{grid-column:1 / -1}
+  .run{grid-template-columns:62px 1fr;gap:0 12px}
+  .spine-tick span b{display:none}
+  .spine-mean span{font-size:11px}
+}
+.spine-tick span b{font-weight:400}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+
+@media print{
+  .masthead,.nav,.actions,.no-print{display:none !important}
+  body{background:#fff;font-size:11pt}
+  .wrap{max-width:none;padding:0}
+  .band,.viz,.gap{break-inside:avoid;border-color:#999}
+  .seg{display:none}
+  .printhead{display:block;border-bottom:1px solid #999;padding-bottom:9px;margin-bottom:14px}
+  .printcommit{display:block}
+  .field{display:none}
+  .res-head{padding-top:0}
+  .printfoot{display:block;margin-top:18px;padding-top:8px;border-top:1px solid #ccc;font-size:8.5pt;color:#666}
+  h2{break-after:avoid}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <div class="mark"><span class="dotrow"><i></i><i></i><i></i><i></i><i></i></span> <span class="brand">PROFABULA</span> Enterprise AI Governance Maturity Assessment</div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" role="tab" aria-selected="true" data-view="assess">Assessment</button>
+      <button class="tab" role="tab" aria-selected="false" data-view="results">Your snapshot</button>
+      <button class="tab" role="tab" aria-selected="false" data-view="vocab">Vocabulary</button>
+    </nav>
+  </div>
+  <div class="credit"><p><b>Facilitator: Dr. Lyron Andrews</b>ISO/IEC 42001 Lead Implementer</p></div>
+</header>
+
+<main class="wrap">
+
+<!-- ============ OPENING ============ -->
+<section id="view-intro">
+  <div class="opening">
+    <p class="kicker">A working session on enterprise AI strategy and governance</p>
+    <h1>Most organizations are already spending on AI. Few are governing it.</h1>
+    <p class="standfirst">Ten questions, drawn from ISO/IEC 42001, the NIST AI Risk Management Framework, and the Cloud Security Alliance's AI safety and controls work. Answer for <strong>the organization you actually work in</strong>, not the one on the org chart.</p>
+    <p class="standfirst">There is no passing score. The point is to find the gap you can do something about on Monday.</p>
+
+    <div class="meta-row">
+      <div class="meta-item"><b>10</b> dimensions</div>
+      <div class="meta-item"><b>14 min</b> to complete</div>
+      <div class="meta-item"><b>1&ndash;5</b> maturity scale</div>
+      <div class="meta-item"><b>Nothing saved</b> stays in this tab</div>
+    </div>
+
+    <ul class="dimlist" id="introList"></ul>
+
+    <button class="btn" id="startBtn">Start the assessment</button>
+    <p class="note">Nothing you enter is stored or sent anywhere. When you finish, copy or print your brief before closing the tab.</p>
+  </div>
+</section>
+
+<!-- ============ ASSESSMENT ============ -->
+<section id="view-assess" class="hidden">
+  <div class="ladder" id="ladder"></div>
+  <div class="counter"><span id="counterLeft"></span><span id="counterRight"></span></div>
+
+  <div class="qcard">
+    <p class="dimname" id="qDim"></p>
+    <h2 class="qtext" id="qText" style="border:none;padding:0;margin:0 0 12px"></h2>
+    <p class="tagline" id="qTags"></p>
+
+    <fieldset>
+      <legend id="qLegend"></legend>
+      <div id="qOptions"></div>
+    </fieldset>
+
+    <div id="qSignals"></div>
+
+    <div class="qextras">
+      <label class="guess"><input type="checkbox" id="qGuess"> I'm not certain &mdash; this is my best guess</label>
+      <div class="evidence">
+        <label for="qEvidence">What makes you say that? (one piece of evidence)</label>
+        <input type="text" id="qEvidence" placeholder="A document, a meeting, an incident, a name&hellip;">
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn ghost small" id="prevBtn">Back</button>
+      <button class="btn small" id="nextBtn">Next</button>
+      <span class="spacer"></span>
+      <span class="kbd"><b>1</b>&ndash;<b>5</b> to rate &middot; <b>Enter</b> to continue</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section id="view-results" class="hidden">
+  <div id="resEmpty" class="ref">
+    <h3>No ratings yet</h3>
+    <p class="lede">Answer the ten questions and your snapshot appears here: an overall maturity band, where each dimension sits, and the gaps worth raising with your leadership team.</p>
+    <button class="btn" data-goto="assess">Go to the assessment</button>
+  </div>
+
+  <div id="resBody" class="hidden">
+    <div class="printhead">
+      <div class="ph-title"><span>PROFABULA</span> Enterprise AI Governance Maturity Assessment</div>
+      <div class="ph-cred">Facilitator: Dr. Lyron Andrews &middot; ISO/IEC 42001 Lead Implementer</div>
+      <div class="ph-meta" id="phMeta"></div>
+    </div>
+    <div class="res-head">
+      <div class="band" id="bandCard"></div>
+
+      <h2>Where the ten dimensions sit</h2>
+      <p class="h2sub">The distance between your lowest and highest mark usually matters more than the average. Governance operates at the weakest point.</p>
+      <div class="viz">
+        <div class="vizbar">
+          <div class="segs">
+            <button class="seg" data-viz="radar" aria-pressed="true">Spider</button>
+            <button class="seg" data-viz="heat" aria-pressed="false">Heat map</button>
+          </div>
+          <div class="spread" id="spreadNote"></div>
+        </div>
+        <div id="vizRadar"></div>
+        <div id="vizHeat" class="hidden"></div>
+        <p class="vizhelp" id="vizHelp"></p>
+      </div>
+
+      <div id="measureSection" class="hidden">
+        <h2>What you actually measure</h2>
+        <p class="h2sub">Governance answers whether AI is safe to run. This answers whether it is worth running. Both questions get asked in the same budget meeting.</p>
+        <div id="measurePanel"></div>
+      </div>
+
+      <h2>The three gaps to take back</h2>
+      <p class="h2sub">Ranked by your own scores, with foundational dimensions breaking ties &mdash; ownership and visibility come before sophistication.</p>
+      <div id="gapList"></div>
+
+      <h2 id="flagsHead">What the pattern suggests</h2>
+      <div id="flagList"></div>
+
+      <h2>Your bring-back brief</h2>
+      <p class="h2sub no-print">Two or three sentences your leadership team can act on. Write it now, while the reasoning is fresh.</p>
+      <div class="field">
+        <label for="fOrg">Team or organization</label>
+        <input type="text" id="fOrg" placeholder="Optional &mdash; appears at the top of your brief">
+      </div>
+      <div class="field">
+        <label for="fFocus">The one gap you'll take on</label>
+        <div class="hint">Not the biggest gap. The one you have standing to move.</div>
+        <select id="fFocus"></select>
+      </div>
+      <div class="field">
+        <label for="fMove">What you'll do in the next 30 days</label>
+        <div class="hint">Something you can start without new budget or a reorganization.</div>
+        <textarea id="fMove" rows="3" placeholder="e.g. Pull every AI-touching contract signed in the last 18 months and list which ones we reviewed."></textarea>
+      </div>
+      <div class="field">
+        <label for="fAsk">What you need from leadership</label>
+        <div class="hint">One specific request, with a named decision-maker.</div>
+        <textarea id="fAsk" rows="3" placeholder="e.g. A standing seat for L&D on the AI review group, and a decision by end of quarter on who signs off on deployments."></textarea>
+      </div>
+      <div class="field">
+        <label for="fVerify">What you'd need to check to know your ratings are right</label>
+        <div class="hint">Especially for anything you marked as a guess.</div>
+        <textarea id="fVerify" rows="2" placeholder="e.g. Ask procurement whether the vendor questionnaire has AI questions in it at all."></textarea>
+      </div>
+
+      <div class="printcommit" id="printCommit"></div>
+
+      <p class="printfoot">Structured self-assessment drawn from ISO/IEC 42001, the NIST AI Risk Management Framework, and Cloud Security Alliance AI safety and controls work. Not an audit or a compliance determination. Facilitated by Dr. Lyron Andrews, ISO/IEC 42001 Lead Implementer.</p>
+
+      <div class="actions">
+        <button class="btn" id="copyBtn">Copy brief to clipboard</button>
+        <button class="btn ghost" id="printBtn">Print or save as PDF</button>
+        <button class="btn ghost" id="resetBtn">Start over</button>
+        <span class="toast" id="toast">Copied</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VOCABULARY ============ -->
+<section id="view-vocab" class="hidden">
+  <div class="ref">
+    <h3>A shared vocabulary</h3>
+    <p class="lede">Governance conversations stall when technology and L&amp;D use the same words for different things. These are the terms that do the most work in the room &mdash; and the ones most often used loosely.</p>
+    <dl>
+      <div class="term"><dt>AI management system</dt><dd>The set of policies, roles, processes and records an organization uses to govern AI on purpose rather than by habit. It is the thing an auditor certifies &mdash; not the models, and not the tools.<span class="src">ISO/IEC 42001</span></dd></div>
+      <div class="term"><dt>Risk assessment vs. impact assessment</dt><dd>A risk assessment asks what could go wrong for the organization. An impact assessment asks what could go wrong for the people subject to the system &mdash; applicants, patients, customers, employees. Doing the first and calling it the second is the single most common governance shortcut.<span class="src">ISO/IEC 42001 Annex A.5 &middot; NIST AI RMF MAP</span></dd></div>
+      <div class="term"><dt>Risk tiering</dt><dd>Sorting AI systems into levels so that controls are proportional. Without it, every use case gets either the full review or none, and in practice most get none.<span class="src">NIST AI RMF MAP 1 &middot; EU AI Act</span></dd></div>
+      <div class="term"><dt>AI actor</dt><dd>Anyone whose decisions shape an AI system's behavior or consequences across its lifecycle &mdash; including the people who buy it, configure it, approve it, and use its output. Useful because it makes the accountability question bigger than the build team.<span class="src">NIST AI RMF</span></dd></div>
+      <div class="term"><dt>Provenance and lineage</dt><dd>Where data and models came from, under what permission, and what happened to them since. The question behind most AI legal exposure and almost every failed audit.<span class="src">ISO/IEC 42001 Annex A.7 &middot; CSA AICM</span></dd></div>
+      <div class="term"><dt>Evaluation (&ldquo;eval&rdquo;)</dt><dd>A repeatable test of whether a system does what it is supposed to do on cases that matter, scored the same way each time. A demo is not an eval. A satisfied pilot user is not an eval.<span class="src">NIST AI RMF MEASURE</span></dd></div>
+      <div class="term"><dt>Red teaming</dt><dd>Deliberately trying to make a system behave badly before someone else does &mdash; adversarial prompts, misuse paths, and edge-case populations. Complements evals; does not replace them.<span class="src">NIST AI RMF MEASURE 2 &middot; CSA</span></dd></div>
+      <div class="term"><dt>Drift</dt><dd>Behavior degrading over time because the world, the data, or an upstream model changed while your system stayed still. The reason a passing launch review expires.<span class="src">NIST AI RMF MANAGE 4</span></dd></div>
+      <div class="term"><dt>Shadow AI</dt><dd>AI in use without governance &mdash; personal accounts, unsanctioned tools, and AI features switched on inside software you already own. Almost always larger than the sanctioned footprint.</dd></div>
+      <div class="term"><dt>Human oversight</dt><dd>A named person with the authority, information, time and competence to override the system. Three of those four are usually missing, and competence is the one L&amp;D owns.<span class="src">ISO/IEC 42001 Annex A.9 &middot; EU AI Act Art. 14</span></dd></div>
+      <div class="term"><dt>AI literacy</dt><dd>A defined baseline of what everyone must understand about AI capability, limits, and acceptable use, plus deeper role-based requirements for those who build, buy, approve or oversee. Increasingly a legal obligation rather than a nice-to-have.<span class="src">ISO/IEC 42001 Cl. 7.2 &middot; EU AI Act Art. 4</span></dd></div>
+      <div class="term"><dt>Prompt injection</dt><dd>Instructions hidden in content the system reads &mdash; a document, a web page, an email, a support ticket &mdash; that the model follows as though they came from you. The defining AI security problem, because the system cannot reliably tell data from instruction.<span class="src">OWASP Top 10 for LLM Applications</span></dd></div>
+      <div class="term"><dt>Agent permissions</dt><dd>What an AI system is allowed to do on its own: which tools, which accounts, which spend, which irreversible actions. The security question shifts from what the model says to what it can reach, and over-permissioning is the fastest way to turn a bad output into an incident.</dd></div>
+      <div class="term"><dt>Disclosure</dt><dd>Telling people when AI is involved in an interaction or a decision that affects them. Distinct from explainability: one says <em>that</em> AI was used, the other says <em>why</em> it produced this result. Both are increasingly required, and organizations routinely confuse them.<span class="src">ISO/IEC 42001 Annex A.8 &middot; EU AI Act</span></dd></div>
+      <div class="term"><dt>System documentation (model card, system card)</dt><dd>A maintained record of what a system is for, what it was tested on, where it fails, and what it must not be used for. Its value is in being current; a card written at launch and never revisited documents a system that no longer exists.</dd></div>
+      <div class="term"><dt>Net value</dt><dd>Benefit weighed against fully loaded cost <em>and</em> risk, rather than benefit against licence fees. Conventional ROI and total cost of ownership were built for software with predictable running costs; AI has variable inference costs, model changes you don't control, and a failure mode that can carry a legal bill.<span class="src">Gartner</span></dd></div>
+      <div class="term"><dt>Return on employee</dt><dd>The interim measure between launch and financial proof: adoption depth, time returned, experience. Legitimate as a leading indicator and dangerous as a destination. The discipline is converting it into an outcome someone in finance will sign, on a stated timeline.<span class="src">Gartner</span></dd></div>
+      <div class="term"><dt>Baseline and counterfactual</dt><dd>What the number was before, and what it would have been anyway. Without the first you cannot claim a change; without the second you cannot claim you caused it. Both are cheap before launch and close to impossible to reconstruct after.</dd></div>
+      <div class="term"><dt>Workflow re-engineering</dt><dd>Redesigning how the work is done rather than adding AI to the existing steps. The most common explanation for AI that demonstrates well and returns nothing: the tool is real, the saved time is real, and the process around it never changed, so nothing reaches the P&L.</dd></div>
+      <div class="term"><dt>Assurance</dt><dd>Evidence that controls work, produced by someone with no stake in the answer. Internal audit coverage, third-party attestation, or certification. Self-assessment &mdash; including this one &mdash; is not assurance.<span class="src">CSA STAR for AI &middot; ISO/IEC 42001 Cl. 9</span></dd></div>
+    </dl>
+
+    <h4>The three frameworks, in one paragraph each</h4>
+    <p class="body"><b>ISO/IEC 42001</b> is a certifiable management-system standard. It tells you what to put in place &mdash; policy, roles, impact assessment, lifecycle controls, supplier requirements &mdash; and its Annex A is a usable checklist for a governance program. Reach for it when the question is <em>how do we run this permanently</em>.</p>
+    <p class="body"><b>The NIST AI Risk Management Framework</b> is voluntary and non-certifiable, organized around four functions: Govern, Map, Measure, Manage. It is the best shared language for talking about risk across technical and non-technical teams, and its profiles let you adapt depth to context. Reach for it when the question is <em>how do we reason about risk together</em>.</p>
+    <p class="body"><b>The Cloud Security Alliance</b> contributes two things here. The AI Controls Matrix is a free, vendor-agnostic control set mapped to ISO 42001, NIST, and the EU AI Act, with an accompanying questionnaire for assessing vendors and a route to third-party attestation. The Trusted AI Safety Expert certificate, built with Northeastern University, is the workforce side: a defined body of knowledge for the people expected to do this work. Reach for these when the question is <em>what specifically do we implement, how do we check a supplier, and who on our team is qualified</em>.</p>
+    <h4>Where to go next</h4>
+    <p class="body">The three frameworks above cover governance and control. They say comparatively little about scaling or about value, which is where most programs actually stall. These are the complements worth knowing by name:</p>
+    <dl>
+      <div class="term"><dt>SEI and Accenture, AI Adoption Maturity Model</dt><dd>Released June 2026 by Carnegie Mellon's Software Engineering Institute &mdash; the institution behind CMMI &mdash; with Accenture. Eight dimensions including workflow re-engineering and ecosystem, which most governance frameworks omit. Free from the SEI Digital Library, and the closest thing to an empirically validated maturity model in this space. Note that Accenture has a commercial interest in the finding that few organizations are scaling.<span class="src">Use it when: your gap is engineering and operating discipline rather than policy</span></dd></div>
+      <div class="term"><dt>MIT CISR Enterprise AI Maturity Model</dt><dd>Four stages, scored as a percentage, from experimentation through to future-ready. Its distinguishing claim is a link between maturity stage and financial performance, with the largest jump occurring between piloting and industrializing. Useful precisely because it gives you a research-backed answer to &ldquo;why does this matter to the business.&rdquo;<span class="src">Use it when: you need to make the board-level case for investing in the boring middle</span></dd></div>
+      <div class="term"><dt>Gartner AI Maturity Model</dt><dd>Five levels across seven areas &mdash; strategy, product, governance, engineering, data, operating model, culture. Built to produce a funded roadmap and a use-case backlog rather than a score, and it plugs into planning cycles that already speak Gartner.<span class="src">Use it when: your CIO already buys the research and you need the output to land in next quarter's plan</span></dd></div>
+      <div class="term"><dt>The rest of the ISO/IEC 42000 family</dt><dd>42001 is the certifiable management system, but it does not stand alone. 23894 covers AI risk management guidance, 42005 gives the method for the impact assessment 42001 requires, 5338 covers the AI system lifecycle, and 42006 sets the requirements for the bodies that certify you. If your organization is heading toward certification, 42005 is the one that does the most immediate work.</dd></div>
+      <div class="term"><dt>Regulation as a de facto framework</dt><dd>The EU AI Act, Colorado's AI Act, and sector rules increasingly set the floor regardless of whether you adopt a voluntary framework. The AI literacy obligation in Article 4 is the one that lands in L&D's lap, and it applies to organizations far outside the EU through their customers and supply chains.</dd></div>
+      <div class="term"><dt>Threat-side references</dt><dd>OWASP's Top 10 for LLM applications and MITRE ATLAS describe how AI systems actually get attacked. Neither is a maturity model, but they answer the question a security leader will ask in the room: what does the failure look like in practice?</dd></div>
+    </dl>
+    <div class="callout">
+      <b>How to combine them without drowning</b>
+      <p>Pick one for structure and borrow from the rest. A workable pairing: ISO 42001 for what to build, NIST AI RMF for shared language across functions, CSA's controls for what to check in a vendor, and SEI or MIT CISR for the scaling and value argument. Running two full assessments in parallel produces two roadmaps and no decisions.</p>
+    </div>
+
+    <div class="callout">
+      <b>The bridge for L&amp;D leaders</b>
+      <p>Every one of these frameworks contains a competence requirement, and none of them tells you how to build it. That is the opening. Governance written by people who cannot explain it to the workforce does not survive contact with the workforce.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FACILITATOR ============ -->
+
+</main>
+
+<script>
+(function(){
+"use strict";
+
+var LEVEL_COLORS = ["#9A3B2C","#B4741A","#84803A","#4A7A5C","#0E5A54"];
+var LEVEL_NAMES  = ["Ad hoc","Emerging","Defined","Managed","Embedded"];
+
+var DIMS = [
+  {
+    id:"strategy", name:"Strategy and mandate", short:"Strategy",
+    q:"Is there a written AI strategy that someone with budget authority has signed?",
+    tags:["ISO 42001 Cl. 4\u20135","NIST GOVERN 1","CSA AICM: GRC"],
+    priority:9,
+    gap:"Without a signed strategy, every AI decision gets relitigated from scratch, and the loudest vendor wins.",
+    levels:[
+      "AI activity is driven by individual curiosity or vendor pitches. Nothing is written down beyond a slide.",
+      "Leaders talk about AI ambitions and fund pilots, but no document connects those pilots to business outcomes.",
+      "A written AI strategy exists with named objectives and an executive sponsor, and it has been shared beyond the team that wrote it.",
+      "The strategy is tied to measurable outcomes, funded through normal planning cycles, and reviewed on a set cadence.",
+      "AI strategy sits inside enterprise strategy and portfolio decisions, and evidence from risk, performance and capability data changes it."
+    ]
+  },
+  {
+    id:"accountability", name:"Accountability and ownership", short:"Accountability",
+    q:"If an AI system caused harm tomorrow, who answers for it \u2014 by name?",
+    tags:["ISO 42001 Cl. 5.3 + A.3","NIST GOVERN 2","CSA AICM: GRC"],
+    priority:1,
+    gap:"Shared ownership is no ownership. This is the gap that turns an incident into a crisis.",
+    levels:[
+      "No one owns AI. The question would start a search, not produce an answer.",
+      "Ownership is informal and usually lands on whoever deployed the tool. There is no standing forum and no charter.",
+      "Named accountable owners exist, alongside a cross-functional group with a charter and clear decision rights.",
+      "Decision rights are documented by risk tier, escalation paths have been exercised, and the governance group can halt a deployment.",
+      "Accountability sits in role descriptions and performance expectations, and governance decisions leave an auditable trail."
+    ]
+  },
+  {
+    id:"inventory", name:"Inventory and visibility", short:"Inventory",
+    q:"Could you list every AI system in use this week \u2014 including AI features inside tools you already bought?",
+    tags:["ISO 42001 A.4 + A.6","NIST MAP 1","CSA AICM: asset management"],
+    priority:2,
+    gap:"You cannot govern, train for, or defend what you have never counted.",
+    levels:[
+      "No inventory exists. Nobody could produce that list.",
+      "A partial list covers major sanctioned systems. Embedded vendor AI and employee use of public tools are unknown.",
+      "A maintained inventory covers built and bought AI, including AI features added to existing products, with an owner recorded for each.",
+      "The inventory carries risk tier, lifecycle stage and data flows, and updates through procurement and change management rather than by hand.",
+      "Discovery is continuous. Unsanctioned AI is detected and either brought under governance or switched off, and the inventory drives which controls apply."
+    ]
+  },
+  {
+    id:"risk", name:"Risk and impact assessment", short:"Risk",
+    q:"Before an AI system goes live, what has to be assessed \u2014 and who can say no?",
+    tags:["ISO 42001 A.5","NIST MAP + MEASURE","CSA TAISE: risk methods"],
+    priority:3,
+    gap:"Unassessed systems don't become safe over time. They become precedents.",
+    levels:[
+      "Risk comes up only when someone raises a concern, and there is no process behind it.",
+      "Reviews happen case by case, usually a security or legal spot-check on the most visible projects.",
+      "A defined assessment runs before deployment and covers effects on the people subject to the system, not only risk to the organization.",
+      "Risk tiers drive proportional controls, assessments re-run on material change, and findings are tracked to closure.",
+      "Risk appetite is stated in measurable terms, and systems that breach their thresholds are fixed or retired."
+    ]
+  },
+  {
+    id:"data", name:"Data governance and provenance", short:"Data",
+    q:"Do you know what data your AI systems are trained on, retrieve from, and send out?",
+    tags:["ISO 42001 A.7","NIST MAP 2","CSA AICM: data security"],
+    priority:5,
+    gap:"Data problems surface as legal problems, and usually after the system is in production.",
+    levels:[
+      "It is unclear what data AI systems touch, and there is no practical limit on what staff paste into public tools.",
+      "General data policy exists but says nothing AI-specific about training use, vendor ingestion, or retention.",
+      "AI-specific data rules are documented: approved sources, licensing or consent basis, sensitive-data handling, retention limits.",
+      "Provenance and lineage are tracked for training and retrieval data, controls are verified rather than asserted, and datasets get quality and bias checks.",
+      "Lineage is traceable from a model output back to source, and the controls run continuously rather than at review time."
+    ]
+  },
+  {
+    id:"safety", name:"Safety, security and transparency", short:"Safety",
+    q:"What stops an AI system here from being attacked, misused, or mistaken for a person?",
+    tags:["ISO 42001 A.6.2 + A.8 + A.9","NIST MEASURE 2 \u00b7 MANAGE 2","CSA AICM \u00b7 OWASP LLM Top 10"],
+    priority:4,
+    gap:"Security teams are asked to defend systems whose failure modes nobody described to them, and the people affected by an AI decision find out afterwards.",
+    levels:[
+      "AI systems inherit ordinary application security and nothing more. No one has tested for prompt injection or misuse, and people are not told when AI is involved in an interaction or a decision about them.",
+      "Guardrails exist where a vendor supplied them. Security review treats AI like any other software, and disclosure happens at the discretion of whoever built the interface.",
+      "AI-specific threats are named and tested before release \u2014 prompt injection, data poisoning, model and secret exposure, over-permissioned agents \u2014 with guardrails, escalation paths and human override defined. Written rules say when people must be told AI was used.",
+      "Adversarial testing runs on a schedule and on material change, agent permissions are scoped and monitored, system documentation is maintained rather than written once, and affected individuals can get an explanation and contest an outcome.",
+      "Safety and security testing sits in the release pipeline, independent or external testers are used, and transparency is a published commitment: what AI is used for, what it is deliberately not used for, and how to challenge it."
+    ]
+  },
+  {
+    id:"thirdparty", name:"Third parties and supply chain", short:"Third parties",
+    q:"When a vendor adds AI to a product you already use, what happens?",
+    tags:["ISO 42001 A.10","NIST GOVERN 6","CSA AI-CAIQ + STAR for AI"],
+    priority:8,
+    gap:"Most enterprise AI risk now arrives through a contract rather than a codebase.",
+    levels:[
+      "AI vendors go through ordinary software procurement. Nothing AI-specific is asked.",
+      "Questions get asked ad hoc, mostly about security posture rather than model behavior, training data, or human oversight.",
+      "Standard contract terms and a diligence questionnaire cover model provenance, data use, evaluation results and incident notification.",
+      "Vendor AI risk is tiered and monitored after signature, with attestations or audit rights, and changes to models or subprocessors are tracked.",
+      "Assurance is continuous: a vendor model change triggers reassessment, and dependencies are mapped through to the foundation model provider."
+    ]
+  },
+  {
+    id:"monitoring", name:"Monitoring, incidents and assurance", short:"Monitoring",
+    q:"How would you find out that an AI system had started behaving badly?",
+    tags:["ISO 42001 Cl. 9 + A.6","NIST MANAGE 4","CSA STAR for AI"],
+    priority:6,
+    gap:"With no monitoring, your first signal is a customer, a regulator, or a reporter.",
+    levels:[
+      "Nothing is monitored after launch. Problems surface as complaints.",
+      "Cost and uptime are watched. Quality and behavior issues are handled informally by whoever built it.",
+      "Performance and behavior are monitored against thresholds, and AI incidents are defined and routed through an incident process.",
+      "Drift, misuse and harmful outputs are detected, incidents get post-reviews, internal audit covers AI, and users have a working channel to report problems.",
+      "Independent assurance is in place \u2014 internal audit, attestation or certification \u2014 and findings feed back into controls and training."
+    ]
+  },
+  {
+    id:"value", name:"Value measurement and ROI", short:"Value",
+    q:"Can you say what your AI spend has returned, in numbers finance would accept?",
+    tags:["ISO 42001 Cl. 9.1","NIST MEASURE 1","Gartner: net value, ROE \u2192 ROI"],
+    priority:7,
+    gap:"Unmeasured AI spend doesn't get cut. It gets defended \u2014 until the budget cycle tightens, and then undefended programs go first.",
+    levels:[
+      "No one has asked what AI has returned. Spend appears as line items and benefit is described through anecdotes and demos.",
+      "Value is claimed in activity terms \u2014 licenses issued, hours \u201csaved\u201d, adoption percentages \u2014 with no pre-launch baseline and no view of total cost.",
+      "Each funded use case has a named business outcome, a baseline measured before launch, an accountable owner for the number, and a fully loaded cost.",
+      "Benefits are tested against a control or an agreed counterfactual, time saved is traced to what it was redeployed into, run and risk costs are netted off, and underperformers get stopped.",
+      "Value, cost and risk are assessed together across the portfolio and reviewed with finance on a normal cadence, and the work itself is redesigned around AI rather than decorated with it \u2014 so returns land in the P&L, not in a survey."
+    ],
+    signals:[
+      "A baseline captured before the tool went live",
+      "Fully loaded cost per use case \u2014 licenses, inference, integration, run, change management",
+      "Depth of use in the actual workflow, not seats issued",
+      "Quality and rework rates, including errors the AI introduced",
+      "End-to-end cycle time for a defined process",
+      "What the time saved was redeployed into",
+      "A control group or agreed counterfactual",
+      "Incident, risk and remediation costs netted against benefit",
+      "Systems stopped or decommissioned when they didn't pay off",
+      "At least one figure finance has agreed to use"
+    ]
+  },
+  {
+    id:"capability", name:"Capability and AI literacy", short:"Capability",
+    q:"Is AI capability defined by role, or is everyone left to work it out?",
+    tags:["ISO 42001 Cl. 7.2","NIST GOVERN 4","CSA TAISE \u00b7 EU AI Act Art. 4"],
+    priority:10,
+    gap:"Policies fail quietly when the people applying them were never taught the vocabulary.",
+    levels:[
+      "There is no AI training. People learn from colleagues, vendors and social media.",
+      "Optional tool training and vendor webinars are available. No baseline expectation, no differentiation by role.",
+      "A literacy baseline applies to everyone, with role-based paths for people who build, buy, approve and use AI, tied to the acceptable-use policy.",
+      "Competence requirements attach to roles that carry AI decisions, capability is measured rather than counted in completions, and L&D sits in the governance group.",
+      "Capability planning runs against the AI roadmap, skills data informs build-buy-partner decisions, and the curriculum refreshes as tools and regulation change."
+    ]
+  }
+];
+
+var BANDS = [
+  { max:1.6, name:"Unmanaged",
+    body:"AI is being adopted faster than it is being governed, and the organization is relying on the good judgment of individuals. That works until it doesn't. Your real exposure is not a model failing \u2014 it is that no one would notice, and no one would own it.",
+    move:"Name an accountable owner and count what you have. Ownership and inventory cost nothing, take weeks rather than quarters, and unlock everything else on this list." },
+  { max:2.4, name:"Reactive",
+    body:"There is real activity, real spend, and real control in a few places \u2014 but the controls are attached to people rather than processes, so they don't survive turnover or scale. You are almost certainly governing the projects you can see while missing the AI arriving through vendors and personal accounts.",
+    move:"Write the two documents that convert habit into process: an AI policy with explicit decision rights, and one standard pre-deployment assessment that applies to everything." },
+  { max:3.2, name:"Defined",
+    body:"You have the documents. The open question is whether they are followed when following them is inconvenient. Organizations at this level fail at the edges \u2014 the pilot that skipped review, the vendor that shipped an AI feature into an existing contract, the training that is measured in completions.",
+    move:"Pick one control and prove it works end to end, with evidence you would be willing to show an auditor. One verified control teaches you more than three new policies." },
+  { max:4.1, name:"Managed",
+    body:"Governance produces evidence rather than artifacts, and you can reconstruct how a decision was made. The risks now are drift and complacency: controls tuned for last year's systems, and assurance that has never been tested by anyone without a stake in the result.",
+    move:"Stress-test it. Run a tabletop on your worst plausible AI incident, or commission an independent review of the control you are proudest of." },
+  { max:5.01, name:"Embedded",
+    body:"Governance is part of how work gets planned, funded and staffed, and it adapts as the technology changes. Be skeptical of your own score: very high self-ratings are most common in organizations with confidence and no external check.",
+    move:"Validate externally through certification, attestation or third-party audit \u2014 and then publish what you learned. At this level your practice is worth more to the field than another internal review." }
+];
+
+var state = { answers:{}, idx:0, view:"intro" };
+
+/* ---------- helpers ---------- */
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function answered(){ return DIMS.filter(function(d){ var a=state.answers[d.id]; return a && a.level; }).length; }
+function scores(){ return DIMS.map(function(d){ var a=state.answers[d.id]; return (a && a.level)?a.level:null; }); }
+function mean(){
+  var v = scores().filter(function(x){ return x!==null; });
+  if(!v.length) return 0;
+  return v.reduce(function(a,b){return a+b;},0)/v.length;
+}
+function bandFor(m){ for(var i=0;i<BANDS.length;i++){ if(m<=BANDS[i].max) return BANDS[i]; } return BANDS[BANDS.length-1]; }
+
+/* ---------- views ---------- */
+function show(view){
+  state.view = view;
+  var map = { intro:"view-intro", assess:"view-assess", results:"view-results", vocab:"view-vocab" };
+  Object.keys(map).forEach(function(k){ $(map[k]).classList.add("hidden"); });
+  $(map[view]).classList.remove("hidden");
+  document.querySelectorAll(".tab").forEach(function(t){
+    var v = t.dataset.view;
+    var on = (v===view) || (v==="assess" && view==="intro");
+    t.setAttribute("aria-selected", on ? "true" : "false");
+  });
+  if(view==="results") renderResults();
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+/* ---------- intro list ---------- */
+(function buildIntro(){
+  $("introList").innerHTML = DIMS.map(function(d,i){
+    return '<li><span class="n">'+(i+1)+'</span><span>'+esc(d.name)+'</span><span class="fw">'+esc(d.tags[0])+'</span></li>';
+  }).join("");
+})();
+
+/* ---------- question rendering ---------- */
+function renderQuestion(){
+  var d = DIMS[state.idx];
+  var a = state.answers[d.id] || {};
+
+  $("qDim").textContent = d.name;
+  $("qText").textContent = d.q;
+  $("qLegend").textContent = d.q;
+  $("qTags").innerHTML = d.tags.map(function(t){ return "<span>"+esc(t)+"</span>"; }).join("");
+
+  $("qOptions").innerHTML = d.levels.map(function(txt,i){
+    var lv = i+1;
+    return '<label class="opt">'+
+      '<input type="radio" name="lvl" value="'+lv+'"'+(a.level===lv?" checked":"")+'>'+
+      '<span class="optbody">'+
+        '<span class="lvl" style="--lc:'+LEVEL_COLORS[i]+'"><span class="num">'+lv+'</span></span>'+
+        '<span class="optmain">'+
+          '<span class="optlabel">'+LEVEL_NAMES[i]+'</span>'+
+          '<span class="optdesc">'+esc(txt)+'</span>'+
+        '</span>'+
+      '</span></label>';
+  }).join("");
+
+  Array.prototype.forEach.call($("qOptions").querySelectorAll("input"), function(inp){
+    inp.addEventListener("change", function(){ setLevel(parseInt(inp.value,10)); });
+  });
+
+  var sig = $("qSignals");
+  if(d.signals){
+    var chosen = a.signals || [];
+    sig.innerHTML = '<div class="signals"><h5>Which of these do you actually measure today?</h5>'+
+      '<p class="sub">Tick only what someone could produce this week. Leading signals sit at the top, financial ones at the bottom.</p>'+
+      '<div class="sgrid">'+ d.signals.map(function(s,i){
+        return '<label class="sitem"><input type="checkbox" data-sig="'+i+'"'+(chosen.indexOf(i)>-1?" checked":"")+'><span>'+esc(s)+'</span></label>';
+      }).join("")+'</div>'+
+      '<div class="scount" id="sCount"></div></div>';
+    Array.prototype.forEach.call(sig.querySelectorAll("input"), function(inp){
+      inp.addEventListener("change", saveSignals);
+    });
+    updateSignalCount();
+  } else {
+    sig.innerHTML = "";
+  }
+
+  $("qGuess").checked = !!a.guess;
+  $("qEvidence").value = a.evidence || "";
+  $("prevBtn").disabled = state.idx===0;
+  $("nextBtn").textContent = (state.idx===DIMS.length-1) ? "See your snapshot" : "Next";
+
+  $("counterLeft").textContent = "Question "+(state.idx+1)+" of "+DIMS.length;
+  $("counterRight").textContent = answered()+" of "+DIMS.length+" rated";
+  renderLadder();
+}
+
+function renderLadder(){
+  $("ladder").innerHTML = DIMS.map(function(d,i){
+    var ad = state.answers[d.id];
+    var st = (i===state.idx) ? "current" : ((ad && ad.level) ? "done" : "todo");
+    return '<button class="rung" data-i="'+i+'" data-state="'+st+'" title="'+esc(d.name)+'" aria-label="Go to question '+(i+1)+': '+esc(d.name)+'"></button>';
+  }).join("");
+  Array.prototype.forEach.call($("ladder").querySelectorAll(".rung"), function(r){
+    r.addEventListener("click", function(){ saveCurrent(); state.idx = parseInt(r.dataset.i,10); renderQuestion(); });
+  });
+}
+
+function setLevel(lv){
+  var d = DIMS[state.idx];
+  var a = state.answers[d.id] || {};
+  a.level = lv;
+  a.guess = $("qGuess").checked;
+  a.evidence = $("qEvidence").value.trim();
+  state.answers[d.id] = a;
+  Array.prototype.forEach.call($("qOptions").querySelectorAll("input"), function(inp){
+    inp.checked = (parseInt(inp.value,10)===lv);
+  });
+  $("counterRight").textContent = answered()+" of "+DIMS.length+" rated";
+  renderLadder();
+}
+
+function readSignals(){
+  var out = [];
+  Array.prototype.forEach.call($("qSignals").querySelectorAll("input"), function(inp){
+    if(inp.checked) out.push(parseInt(inp.dataset.sig,10));
+  });
+  return out;
+}
+function updateSignalCount(){
+  var el = $("sCount");
+  if(!el) return;
+  var d = DIMS[state.idx];
+  var n = readSignals().length;
+  var verdict = n<=2 ? "You are measuring spend, not value."
+    : n<=5 ? "Mostly activity. The financial signals are the ones that survive a budget review."
+    : n<=8 ? "A credible measurement base. Look at what is still missing."
+    : "Unusually complete \u2014 be ready to show the working.";
+  el.innerHTML = "<b>"+n+" of "+d.signals.length+"</b> signals measured. "+esc(verdict);
+}
+function saveSignals(){
+  var d = DIMS[state.idx];
+  var a = state.answers[d.id] || {};
+  a.signals = readSignals();
+  state.answers[d.id] = a;
+  updateSignalCount();
+}
+
+function saveCurrent(){
+  var d = DIMS[state.idx];
+  if(d.signals) saveSignals();
+  var a = state.answers[d.id];
+  if(!a) return;
+  a.guess = $("qGuess").checked;
+  a.evidence = $("qEvidence").value.trim();
+}
+
+function next(){
+  saveCurrent();
+  if(state.idx < DIMS.length-1){ state.idx++; renderQuestion(); window.scrollTo({top:0,behavior:"instant"}); }
+  else { show("results"); }
+}
+function prev(){
+  saveCurrent();
+  if(state.idx>0){ state.idx--; renderQuestion(); window.scrollTo({top:0,behavior:"instant"}); }
+}
+
+/* ---------- results ---------- */
+function renderResults(){
+  var n = answered();
+  if(n===0){ $("resEmpty").classList.remove("hidden"); $("resBody").classList.add("hidden"); return; }
+  $("resEmpty").classList.add("hidden");
+  $("resBody").classList.remove("hidden");
+
+  var m = mean();
+  var b = bandFor(m);
+  var partial = n<DIMS.length ? '<p class="note" style="margin-top:14px">Based on '+n+' of '+DIMS.length+' dimensions. Rate the rest for a fuller picture.</p>' : "";
+
+  $("bandCard").innerHTML =
+    '<div class="band-top"><span class="band-name">'+esc(b.name)+'</span>'+
+    '<span class="band-score">overall <b>'+m.toFixed(1)+'</b> / 5</span></div>'+
+    '<p>'+esc(b.body)+'</p>'+
+    '<div class="move"><b>The next move:</b> '+esc(b.move)+'</div>'+partial;
+
+  renderViz(m);
+  renderMeasure();
+  renderGaps();
+  renderFlags(m);
+  fillFocus();
+}
+
+function renderChart(m){
+  var n = DIMS.length, R = 155, CX = 300, CY = 238;
+  var ang = function(i){ return (-90 + i*(360/n)) * Math.PI/180; };
+  var pt = function(i,v){ var r=(v/5)*R, a=ang(i); return [CX+r*Math.cos(a), CY+r*Math.sin(a)]; };
+  var f = function(x){ return Math.round(x*10)/10; };
+
+  var svg = '<svg class="radar" viewBox="0 0 600 472" role="img" aria-label="Maturity across '+n+' dimensions">';
+
+  for(var k=1;k<=5;k++){
+    var ring = [];
+    for(var i=0;i<n;i++){ var p2=pt(i,k); ring.push(f(p2[0])+","+f(p2[1])); }
+    svg += '<polygon class="ring'+(k===5?" outer":"")+'" points="'+ring.join(" ")+'"/>';
+  }
+  for(var i=0;i<n;i++){
+    var e = pt(i,5);
+    svg += '<line class="spoke" x1="'+CX+'" y1="'+CY+'" x2="'+f(e[0])+'" y2="'+f(e[1])+'"/>';
+  }
+  for(var k=1;k<=5;k++){
+    svg += '<text class="rl" x="'+(CX+4)+'" y="'+(CY-(k/5)*R+11)+'">'+k+'</text>';
+  }
+
+  if(m>0){
+    svg += '<circle class="meanring" cx="'+CX+'" cy="'+CY+'" r="'+f((m/5)*R)+'"/>';
+    svg += '<text class="meanlbl" x="'+CX+'" y="'+f(CY+(m/5)*R+13)+'" text-anchor="middle">average '+m.toFixed(1)+'</text>';
+  }
+
+  var poly = [], pts = [], unsure = [], anyRated = false;
+  for(var i=0;i<n;i++){
+    var a = state.answers[DIMS[i].id];
+    var v = (a && a.level) ? a.level : 0;
+    if(v) anyRated = true;
+    unsure.push(!!(a && a.guess));
+    var p3 = pt(i, v);
+    pts.push(p3);
+    poly.push(f(p3[0])+","+f(p3[1]));
+  }
+  if(anyRated){
+    svg += '<polygon class="polyfill" points="'+poly.join(" ")+'"/>';
+    for(var i=0;i<n;i++){
+      var j = (i+1)%n, dash = (unsure[i]||unsure[j]) ? " unsure" : "";
+      svg += '<line class="edge'+dash+'" x1="'+f(pts[i][0])+'" y1="'+f(pts[i][1])+
+             '" x2="'+f(pts[j][0])+'" y2="'+f(pts[j][1])+'"/>';
+    }
+  }
+
+  for(var i=0;i<n;i++){
+    var d = DIMS[i], a = state.answers[d.id];
+    var v = (a && a.level) ? a.level : 0;
+    var g = !!(a && a.guess);
+    if(v){
+      var p4 = pt(i,v);
+      svg += '<circle class="vtx'+(g?" unsure":"")+'" cx="'+f(p4[0])+'" cy="'+f(p4[1])+'" r="5.5" '+
+             (g ? 'fill="#fff" style="stroke:'+LEVEL_COLORS[v-1]+'"' : 'fill="'+LEVEL_COLORS[v-1]+'"')+
+             '><title>'+esc(d.name)+' \u2014 level '+v+', '+LEVEL_NAMES[v-1]+(g?' (best guess)':'')+'</title></circle>';
+    }
+    var lp = pt(i, 5), dx = lp[0]-CX, dy = lp[1]-CY;
+    var lx = CX + dx*1.16, ly = CY + dy*1.16;
+    var anchor = Math.abs(dx)<6 ? "middle" : (dx>0 ? "start" : "end");
+    var cls = v===0 ? "lbl unrated" : (v<=2 ? "lbl low" : "lbl");
+    svg += '<text class="'+cls+'" x="'+f(lx)+'" y="'+f(ly)+'" text-anchor="'+anchor+'">'+esc(d.short)+'</text>';
+    svg += '<text class="sc'+(g?" unsure":"")+'" x="'+f(lx)+'" y="'+f(ly+13)+'" text-anchor="'+anchor+'">'+
+           (v ? ("level "+v+(g?" \u00b7 unsure":"")) : "not rated")+'</text>';
+  }
+
+  svg += '</svg>';
+  $("vizRadar").innerHTML = svg;
+}
+
+function renderHeat(){
+  var rows = '<div class="grow head"><div>Dimension</div><div class="ghead"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div><div></div></div>';
+  DIMS.forEach(function(d){
+    var a = state.answers[d.id];
+    if(a && !a.level) a = null;
+    var lvl = a ? a.level : 0;
+    var cells = "";
+    for(var i=1;i<=5;i++){
+      if(lvl && i<=lvl){
+        var op = 0.45 + (0.55 * (i/lvl));
+        cells += '<div class="gcell" style="background:'+LEVEL_COLORS[lvl-1]+';opacity:'+Math.min(op,1).toFixed(2)+'"></div>';
+      } else {
+        cells += '<div class="gcell"></div>';
+      }
+    }
+    rows += '<div class="grow"><div class="gname">'+esc(d.name)+
+      (a && a.guess ? ' <em>best guess</em>' : (a ? "" : ' <em>not rated</em>'))+
+      '</div><div class="gcells">'+cells+'</div><div class="gscore">'+(lvl||"\u2013")+'</div></div>';
+  });
+  $("vizHeat").innerHTML = '<div class="grid">'+rows+'</div>';
+}
+
+function renderViz(m){
+  renderChart(m);
+  renderHeat();
+
+  var vals = scores().filter(function(x){ return x!==null; });
+  var lo = Math.min.apply(null,vals), hi = Math.max.apply(null,vals);
+  $("spreadNote").innerHTML = 'lowest <b>'+lo+'</b> &nbsp;&middot;&nbsp; highest <b>'+hi+'</b> &nbsp;&middot;&nbsp; spread <b>'+(hi-lo)+'</b>';
+
+  var weakest = DIMS.filter(function(d){ var a=state.answers[d.id]; return a && a.level===lo; })
+                    .map(function(d){ return d.short; });
+  var weak = esc(weakest.join(", "));
+  var unsureDims = DIMS.filter(function(d){ var a=state.answers[d.id]; return a && a.level && a.guess; })
+                       .map(function(d){ return d.short; });
+  var unsureNote = unsureDims.length
+    ? ' Dashed edges and hollow points mark the '+unsureDims.length+' dimension'+(unsureDims.length>1?'s':'')+
+      ' you rated as a best guess \u2014 <b>'+esc(unsureDims.join(", "))+'</b>. Treat that part of the shape as provisional.'
+    : "";
+  VIZ_HELP.radar = (hi-lo>=2)
+    ? 'The dashed ring is your average. Anything pulled inside it is holding the program back \u2014 right now that is <b>'+weak+'</b>.'
+    : 'The dashed ring is your average. A round shape means consistency; the question is whether the whole ring sits where you need it.';
+  VIZ_HELP.radar += unsureNote;
+  VIZ_HELP.heat = (hi-lo>=2)
+    ? 'Read the short bars first. <b>'+weak+'</b> sets the practical ceiling for everything to the right of it.'
+    : 'Bars of similar length mean a consistent program. Pick the one you could most easily prove with evidence, and start there.';
+  if(unsureDims.length) VIZ_HELP.heat += ' Rows tagged <b>best guess</b> are unverified.';
+  setViz(currentViz);
+}
+
+var VIZ_HELP = { radar:"", heat:"" };
+var currentViz = "radar";
+
+function setViz(which){
+  currentViz = which;
+  $("vizHelp").innerHTML = VIZ_HELP[which] || "";
+  $("vizRadar").classList.toggle("hidden", which!=="radar");
+  $("vizHeat").classList.toggle("hidden", which!=="heat");
+  document.querySelectorAll(".seg").forEach(function(btn){
+    btn.setAttribute("aria-pressed", btn.dataset.viz===which ? "true" : "false");
+  });
+}
+
+function topGaps(){
+  var rated = DIMS.filter(function(d){ var a=state.answers[d.id]; return a && a.level; });
+  rated.sort(function(x,y){
+    var dx = state.answers[x.id].level, dy = state.answers[y.id].level;
+    if(dx!==dy) return dx-dy;
+    return x.priority-y.priority;
+  });
+  return rated.slice(0,3);
+}
+
+function valueDim(){ return DIMS.filter(function(d){ return d.id==="value"; })[0]; }
+
+function renderMeasure(){
+  var d = valueDim();
+  var a = state.answers[d.id];
+  var sec = $("measureSection");
+  if(!a || !a.signals){ sec.classList.add("hidden"); return; }
+  sec.classList.remove("hidden");
+
+  var chosen = a.signals, total = d.signals.length, n = chosen.length;
+  var meter = "";
+  for(var i=0;i<total;i++){ meter += '<i class="'+(i<n?"on":"")+'"></i>'; }
+
+  var verdict, why;
+  if(n<=2){
+    verdict = "You are measuring spend, not value.";
+    why = "Anecdote and demo are the default currency here, and they lose to a spreadsheet every time. Pick one funded use case and capture a baseline this month, before the next round of changes makes the before-state unrecoverable.";
+  } else if(n<=5){
+    verdict = "Activity metrics are carrying the argument.";
+    why = "Seats, sessions and self-reported hours saved are real leading indicators and they are also the easiest numbers to dismiss. The path most organizations take is to start with adoption and employee benefit, then convert deliberately into financial outcomes \u2014 the conversion is the step that gets skipped.";
+  } else if(n<=8){
+    verdict = "A credible measurement base.";
+    why = "You could defend a position in a budget review. The remaining signals are usually the uncomfortable ones \u2014 counterfactuals, netted risk costs, and stopping things \u2014 and they are what separate a claim from a finding.";
+  } else {
+    verdict = "Unusually complete.";
+    why = "Very few organizations can tick this many. Before you present it, check that each signal has an owner and a source rather than an estimate, because this is the profile that gets audited.";
+  }
+
+  var missing = d.signals.filter(function(s,i){ return chosen.indexOf(i)===-1; });
+  var missHtml = missing.length ? '<ul class="missing">'+missing.map(function(s){ return "<li>"+esc(s)+"</li>"; }).join("")+"</ul>" : "";
+
+  $("measurePanel").innerHTML =
+    '<div class="gap" style="--gc:'+(n<=2?LEVEL_COLORS[0]:n<=5?LEVEL_COLORS[1]:n<=8?LEVEL_COLORS[3]:LEVEL_COLORS[4])+'">'+
+    '<div class="gap-top"><span class="gap-name">'+esc(verdict)+'</span>'+
+    '<span class="gap-score">'+n+' of '+total+' signals</span></div>'+
+    '<div class="meter">'+meter+'</div>'+
+    '<p>'+esc(why)+'</p>'+
+    (missHtml ? '<div class="yours" style="border:none;padding:0;margin-top:4px"><b>Not measured yet:</b></div>'+missHtml : "")+
+    '</div>';
+}
+
+function renderGaps(){
+  var gaps = topGaps();
+  $("gapList").innerHTML = gaps.map(function(d){
+    var a = state.answers[d.id];
+    var nextLv = Math.min(a.level+1,5);
+    var yours = "";
+    if(a.evidence) yours += '<b>Your evidence:</b> '+esc(a.evidence)+" ";
+    if(a.guess) yours += (a.evidence?" &middot; ":"")+"You marked this as a best guess \u2014 verify before quoting it.";
+    return '<div class="gap" style="--gc:'+LEVEL_COLORS[a.level-1]+'">'+
+      '<div class="gap-top"><span class="gap-name">'+esc(d.name)+'</span>'+
+      '<span class="gap-score">level '+a.level+' \u00b7 '+LEVEL_NAMES[a.level-1]+'</span></div>'+
+      '<p>'+esc(d.gap)+'</p>'+
+      '<p style="color:var(--ink);font-size:16px"><b style="font-family:var(--sans);font-size:13px;font-weight:600">To reach level '+nextLv+':</b> '+esc(d.levels[nextLv-1])+'</p>'+
+      (yours ? '<div class="yours">'+yours+'</div>' : "")+
+      '</div>';
+  }).join("");
+}
+
+function get(id){ var a = state.answers[id]; return a ? a.level : null; }
+
+function renderFlags(m){
+  var flags = [];
+  var vals = scores().filter(function(x){ return x!==null; });
+  var lo = Math.min.apply(null,vals), hi = Math.max.apply(null,vals);
+  var guesses = DIMS.filter(function(d){ var a=state.answers[d.id]; return a && a.level && a.guess; });
+
+  if(hi-lo>=2){
+    flags.push({t:"Uneven rather than immature",
+      p:"Your marks span "+lo+" to "+hi+". Lopsided programs fail at the low end regardless of how strong the high end is \u2014 a mature review process cannot govern systems that were never inventoried. Argue for the floor, not the average."});
+  }
+  var strat = get("strategy"), inv = get("inventory"), mon = get("monitoring");
+  if(strat!==null && strat>=3 && ((inv!==null&&inv<=2)||(mon!==null&&mon<=2))){
+    flags.push({t:"Ambition ahead of evidence",
+      p:"You have a strategy you could present, and limited means of knowing whether it is working. This is the most common shape in organizations under pressure to show AI momentum, and the one most likely to be discovered by someone else first."});
+  }
+  var cap = get("capability");
+  if(cap!==null && vals.length>1){
+    var others = DIMS.filter(function(d){ var a=state.answers[d.id]; return d.id!=="capability" && a && a.level; })
+                     .map(function(d){ return state.answers[d.id].level; });
+    var om = others.reduce(function(a,b){return a+b;},0)/others.length;
+    if(om-cap>=1.5){
+      flags.push({t:"Governance without the people to run it",
+        p:"Your capability rating trails the rest of your program. Every framework here carries a competence requirement, and controls degrade to paperwork when the people applying them were never taught what the words mean. This is the clearest opening for L&D to enter the governance conversation with something to offer."});
+    }
+    if(cap-om>=1.5){
+      flags.push({t:"Training is carrying the program alone",
+        p:"Capability is well ahead of the structures around it. Well-trained people inside an ungoverned system make better individual decisions and still have nowhere to escalate. Use your training footprint as leverage to ask who owns the decisions."});
+    }
+  }
+  var saf = get("safety"), tp = get("thirdparty"), rsk = get("risk");
+  if(saf!==null && tp!==null && saf>=4 && tp<=2){
+    flags.push({t:"Hardened inside, open at the perimeter",
+      p:"You test what you build and accept what you buy. Attackers and auditors both work the seam between the two, and a prompt-injection surface inside a purchased tool is indistinguishable from one you wrote."});
+  }
+  if(saf!==null && rsk!==null && saf<=2 && rsk>=4){
+    flags.push({t:"Assessed but not disclosed",
+      p:"You examine how AI affects people without telling them it is involved. Impact assessment establishes what you owe them; transparency is how they can act on it. The first without the second reads as concealment once it surfaces, whatever the intent was."});
+  }
+  var val = get("value");
+  if(val!==null && strat!==null && strat>=3 && val<=2){
+    flags.push({t:"Spending without proof",
+      p:"You can describe the ambition and not the return. This is the shape that survives one budget cycle and rarely two \u2014 and when the cuts come, the AI program with no defensible number is easier to cut than the one with a mediocre one."});
+  }
+  if(val!==null && val<=2 && cap!==null && cap>=3){
+    flags.push({t:"Training measured, value not",
+      p:"You can report on who was trained and not on what it produced. L&D is often the only function with instrumentation on AI adoption, which makes it the natural owner of the leading indicators \u2014 depth of use, workflow change, what the saved time was redeployed into. That is a seat at the table earned with data rather than argument."});
+  }
+  var mon2 = get("monitoring");
+  if(val!==null && mon2!==null && val>=4 && mon2<=2){
+    flags.push({t:"Counting the upside only",
+      p:"You measure what AI returns and not how it behaves. Benefit figures that exclude incident, rework and remediation cost overstate return by an unknown margin, and the correction usually arrives as a surprise."});
+  }
+  if(guesses.length>=3){
+    flags.push({t:"Uncertainty is itself the finding",
+      p:"You marked "+guesses.length+" dimensions as best guesses. Take the questions back rather than the answers \u2014 a senior leader who cannot get a confident answer to ten questions about their own AI estate has learned something worth reporting."});
+  }
+  if(vals.length>=6 && vals.every(function(v){ return v===3; })){
+    flags.push({t:"Threes everywhere",
+      p:"A flat middle usually means documented but unverified. Pick the dimension you feel most confident about and try to produce the evidence. Whatever happens next is your real starting point."});
+  }
+  if(lo>=4){
+    flags.push({t:"Check this against someone else's view",
+      p:"These are strong marks. Before you carry them to leadership, have a colleague in a different function complete the same ten questions independently. If their answers match yours, you have something worth certifying."});
+  }
+  if(!flags.length){
+    flags.push({t:"A consistent profile",
+      p:"No strong imbalance across your ratings. Work the three gaps above in order \u2014 they are sequenced so that each one makes the next easier."});
+  }
+
+  var unc = flags.filter(function(f){ return f.t.indexOf("Uncertainty")===0; });
+  if(unc.length){ flags = unc.concat(flags.filter(function(f){ return f.t.indexOf("Uncertainty")!==0; })); }
+  flags = flags.slice(0,5);
+
+  $("flagList").innerHTML = flags.map(function(f){
+    return '<div class="flag"><span class="mk"></span><div><div class="ft">'+esc(f.t)+'</div><p>'+esc(f.p)+'</p></div></div>';
+  }).join("");
+}
+
+function fillFocus(){
+  var sel = $("fFocus");
+  var cur = sel.value;
+  var gaps = topGaps().map(function(d){ return d.id; });
+  sel.innerHTML = DIMS.filter(function(d){ var a=state.answers[d.id]; return a && a.level; }).map(function(d){
+    var flagged = gaps.indexOf(d.id)>-1 ? "  \u2014 flagged gap" : "";
+    return '<option value="'+d.id+'">'+esc(d.name)+" (level "+state.answers[d.id].level+")"+flagged+"</option>";
+  }).join("");
+  if(cur) sel.value = cur;
+  else if(gaps.length) sel.value = gaps[0];
+}
+
+/* ---------- brief ---------- */
+function buildBrief(){
+  var m = mean(), b = bandFor(m);
+  var org = $("fOrg").value.trim();
+  var L = [];
+  L.push("PROFABULA \u2014 ENTERPRISE AI GOVERNANCE MATURITY ASSESSMENT");
+  L.push("Self-assessment brief");
+  L.push("Facilitator: Dr. Lyron Andrews \u00b7 ISO/IEC 42001 Lead Implementer");
+  if(org) L.push(org);
+  L.push(new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}));
+  L.push("");
+  L.push("OVERALL: "+b.name+" ("+m.toFixed(1)+" of 5)");
+  L.push(b.body);
+  L.push("Next move: "+b.move);
+  L.push("");
+  L.push("RATINGS");
+  DIMS.forEach(function(d){
+    var a = state.answers[d.id];
+    if(!a){ L.push("  \u2013 "+d.name+": not rated"); return; }
+    var line = "  "+a.level+"/5  "+d.name+" ("+LEVEL_NAMES[a.level-1]+")";
+    if(a.guess) line += "  [best guess]";
+    L.push(line);
+    if(a.evidence) L.push("        evidence: "+a.evidence);
+  });
+  var vd = valueDim(), va = state.answers[vd.id];
+  if(va && va.signals){
+    L.push("");
+    L.push("VALUE SIGNALS MEASURED TODAY ("+va.signals.length+" of "+vd.signals.length+")");
+    vd.signals.forEach(function(s,i){
+      L.push("  ["+(va.signals.indexOf(i)>-1?"x":" ")+"] "+s);
+    });
+  }
+  L.push("");
+  L.push("PRIORITY GAPS");
+  topGaps().forEach(function(d,i){
+    var a = state.answers[d.id];
+    L.push("  "+(i+1)+". "+d.name+" \u2014 level "+a.level);
+    L.push("     Why it matters: "+d.gap);
+    L.push("     To reach level "+Math.min(a.level+1,5)+": "+d.levels[Math.min(a.level,4)]);
+  });
+  var flags = $("flagList").innerText || "";
+  if(flags.trim()){
+    L.push("");
+    L.push("PATTERN NOTES");
+    flags.split("\n").filter(function(x){ return x.trim(); }).forEach(function(x){ L.push("  "+x.trim()); });
+  }
+  var focusId = $("fFocus").value;
+  var focusDim = DIMS.filter(function(d){ return d.id===focusId; })[0];
+  L.push("");
+  L.push("COMMITMENT");
+  L.push("  Focus: "+(focusDim ? focusDim.name : "\u2014"));
+  L.push("  Next 30 days: "+($("fMove").value.trim() || "\u2014"));
+  L.push("  Ask of leadership: "+($("fAsk").value.trim() || "\u2014"));
+  L.push("  To verify: "+($("fVerify").value.trim() || "\u2014"));
+  L.push("");
+  L.push("Structured self-assessment drawn from ISO/IEC 42001, the NIST AI Risk Management Framework,");
+  L.push("and Cloud Security Alliance AI safety and controls work. Not an audit or a compliance determination.");
+  return L.join("\n");
+}
+
+/* ---------- events ---------- */
+$("startBtn").addEventListener("click", function(){ show("assess"); renderQuestion(); });
+$("nextBtn").addEventListener("click", next);
+$("prevBtn").addEventListener("click", prev);
+
+document.querySelectorAll(".seg").forEach(function(btn){
+  btn.addEventListener("click", function(){ setViz(btn.dataset.viz); });
+});
+
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){
+    if(state.view==="assess") saveCurrent();
+    var v = t.dataset.view;
+    if(v==="assess"){ if(answered()===0 && state.idx===0){ show("intro"); } else { show("assess"); renderQuestion(); } }
+    else show(v);
+  });
+});
+document.querySelectorAll("[data-goto]").forEach(function(el){
+  el.addEventListener("click", function(){ show(el.dataset.goto); renderQuestion(); });
+});
+
+document.addEventListener("keydown", function(e){
+  if(state.view!=="assess") return;
+  var tag = (e.target.tagName||"").toLowerCase();
+  if(tag==="input" && e.target.type==="text"){ if(e.key==="Enter") next(); return; }
+  if(tag==="textarea"||tag==="select") return;
+  if(e.key>="1" && e.key<="5"){ setLevel(parseInt(e.key,10)); e.preventDefault(); }
+  else if(e.key==="Enter" || e.key==="ArrowRight"){ next(); e.preventDefault(); }
+  else if(e.key==="ArrowLeft"){ prev(); e.preventDefault(); }
+});
+
+$("fFocus").addEventListener("change", function(){});
+$("copyBtn").addEventListener("click", function(){
+  var text = buildBrief();
+  var done = function(){ var t=$("toast"); t.classList.add("on"); setTimeout(function(){ t.classList.remove("on"); },1800); };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done, function(){ fallbackCopy(text, done); });
+  } else fallbackCopy(text, done);
+});
+function fallbackCopy(text, done){
+  var ta = document.createElement("textarea");
+  ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); done(); }
+  catch(err){ window.prompt("Copy your brief:", text); }
+  document.body.removeChild(ta);
+}
+function fillPrintCommit(){
+  var focusId = $("fFocus").value;
+  var fd = DIMS.filter(function(d){ return d.id===focusId; })[0];
+  var rows = [
+    ["The one gap you'll take on", fd ? fd.name + " \u2014 level " + state.answers[fd.id].level : ""],
+    ["Next 30 days", $("fMove").value.trim()],
+    ["The ask of leadership", $("fAsk").value.trim()],
+    ["To verify", $("fVerify").value.trim()]
+  ].filter(function(r){ return r[1]; });
+  $("printCommit").innerHTML = rows.length
+    ? rows.map(function(r){
+        return '<div class="pc"><b>'+esc(r[0])+'</b><span>'+esc(r[1])+'</span></div>';
+      }).join("")
+    : "";
+}
+
+function fillPrintHead(){
+  var org = $("fOrg").value.trim();
+  var d = new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});
+  $("phMeta").textContent = (org ? org + "  \u00b7  " : "") + d;
+}
+function preparePrint(){ fillPrintHead(); fillPrintCommit(); }
+window.addEventListener("beforeprint", preparePrint);
+$("printBtn").addEventListener("click", function(){ preparePrint(); window.print(); });
+$("resetBtn").addEventListener("click", function(){
+  if(!window.confirm("Clear all ratings and start over? Your brief is not saved.")) return;
+  state.answers = {}; state.idx = 0;
+  ["fOrg","fMove","fAsk","fVerify"].forEach(function(id){ $(id).value=""; });
+  show("intro");
+});
+
+$("qGuess").addEventListener("change", saveCurrent);
+$("qEvidence").addEventListener("blur", saveCurrent);
+
+renderLadder();
+})();
+</script>
+</body>
+</html>
